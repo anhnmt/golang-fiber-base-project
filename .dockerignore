@@ -1,0 +1,14 @@
+.editorconfig
+.git
+AUTHORS.md
+CONTRIBUTING.md
+LICENSE
+Makefile
+NOTICE
+README.md
+
+!*.go
+*.pb.go
+!*.proto
+!go.mod
+!go.sum
