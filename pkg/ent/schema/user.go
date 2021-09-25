@@ -4,6 +4,7 @@ import (
 	"entgo.io/ent"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
+
 	"github.com/xdorro/golang-fiber-base-project/pkg/ent/schema/mixin"
 )
 

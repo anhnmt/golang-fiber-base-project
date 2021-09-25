@@ -16,6 +16,10 @@ type DefaultConfig struct {
 	AppName    string `mapstructure:"APP_NAME"`
 	AppPort    int    `mapstructure:"APP_PORT"`
 	AppPrefork bool   `mapstructure:"APP_PREFORK"`
+	AppNode    int64  `mapstructure:"APP_NODE"`
+
+	// LOGGER
+	LogEnabled bool `mapstructure:"LOG_ENABLED"`
 
 	// DATABASE
 	DBDriver string `mapstructure:"DB_DRIVER"`

@@ -11,6 +11,8 @@ import (
 
 	"github.com/xdorro/golang-fiber-base-project/config"
 	"github.com/xdorro/golang-fiber-base-project/internal/database"
+	"github.com/xdorro/golang-fiber-base-project/internal/middleware"
+	"github.com/xdorro/golang-fiber-base-project/internal/router"
 )
 
 // @title Golang Fiber Simple Project
@@ -48,13 +50,14 @@ func main() {
 		},
 	})
 
-	_ = database.Connection(conf)
+	// Connect DB
+	client := database.Connection(conf)
 
-	//// Config Middleware
-	//middleware.Middleware(server, app)
-	//
-	//// Config Router
-	//router.Router(app, server, client)
+	// Config Middleware
+	middleware.Middleware(app, conf)
+
+	// Config Router
+	router.Router(app, conf, client)
 
 	// signal channel to capture system calls
 	sigCh := make(chan os.Signal, 1)

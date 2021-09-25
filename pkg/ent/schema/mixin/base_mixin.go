@@ -4,6 +4,7 @@ import (
 	"entgo.io/ent"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/mixin"
+	"github.com/xdorro/golang-fiber-base-project/config"
 	"github.com/xdorro/golang-fiber-base-project/util"
 )
 
@@ -17,8 +18,9 @@ func (BaseMixin) Fields() []ent.Field {
 		field.Int64("id").
 			Immutable().
 			DefaultFunc(func() int64 {
-				//return utils.UUID()
-				return util.GenerateSnowflakeID().Int64()
+				conf := config.Config()
+
+				return util.GenerateSnowflakeID(conf.AppNode).Int64()
 			}),
 	}
 }
