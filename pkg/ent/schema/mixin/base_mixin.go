@@ -1,11 +1,10 @@
 package mixin
 
 import (
-	"entgo.io/contrib/entgql"
 	"entgo.io/ent"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/mixin"
-	"github.com/xdorro/golang-fiber-base-project/internal/common"
+	"github.com/xdorro/golang-fiber-base-project/util"
 )
 
 type BaseMixin struct {
@@ -15,14 +14,12 @@ type BaseMixin struct {
 // Fields of the BaseMixin.
 func (BaseMixin) Fields() []ent.Field {
 	return []ent.Field{
-		field.String("id").
-			DefaultFunc(func() string {
+		field.Int64("id").
+			Immutable().
+			DefaultFunc(func() int64 {
 				//return utils.UUID()
-				return common.GenerateUUID()
-			}).
-			Annotations(
-				entgql.OrderField("ID"),
-			),
+				return util.GenerateSnowflakeID().Int64()
+			}),
 	}
 }
 

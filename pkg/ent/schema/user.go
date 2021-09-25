@@ -1,7 +1,6 @@
 package schema
 
 import (
-	"entgo.io/contrib/entgql"
 	"entgo.io/ent"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
@@ -17,25 +16,16 @@ type User struct {
 func (User) Fields() []ent.Field {
 	return []ent.Field{
 		field.String("name").
-			NotEmpty().
-			Annotations(
-				entgql.OrderField("NAME"),
-			),
+			NotEmpty(),
 
 		field.String("email").
-			NotEmpty().
-			Annotations(
-				entgql.OrderField("EMAIL"),
-			),
+			NotEmpty(),
 
 		field.String("password").
 			NotEmpty(),
 
 		field.Int("status").
-			Default(1).
-			Annotations(
-				entgql.OrderField("STATUS"),
-			),
+			Default(1),
 	}
 }
 

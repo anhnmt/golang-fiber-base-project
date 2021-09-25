@@ -1,6 +1,7 @@
 package config
 
 import (
+	"context"
 	"log"
 	"sync"
 
@@ -8,13 +9,17 @@ import (
 )
 
 type DefaultConfig struct {
+	// DEFAULT
+	Ctx context.Context
+
 	// APP
-	AppName string `mapstructure:"APP_NAME"`
-	AppPort string `mapstructure:"APP_PORT"`
+	AppName    string `mapstructure:"APP_NAME"`
+	AppPort    int    `mapstructure:"APP_PORT"`
+	AppPrefork bool   `mapstructure:"APP_PREFORK"`
 
 	// DATABASE
-	DBConnection string `mapstructure:"DB_CONNECTION"`
-	DBUrl        string `mapstructure:"DB_URL"`
+	DBDriver string `mapstructure:"DB_DRIVER"`
+	DBUrl    string `mapstructure:"DB_URL"`
 }
 
 var (
@@ -45,7 +50,9 @@ func Config() *DefaultConfig {
 					log.Fatalf("unable to decode into struct, %v", err)
 				}
 
-				//log.Println(defaultConfig)
+				defaultConfig.Ctx = context.Background()
+
+				log.Println(defaultConfig)
 			}
 		})
 	}
