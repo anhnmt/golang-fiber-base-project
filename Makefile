@@ -25,7 +25,7 @@ run: build
 	$(BUILD_DIR)/$(APP_NAME)
 
 docker.build:
-	docker build -t $(DOCKER_LOCAL)/$(APP_NAME):$(APP_VERSION) .
+	docker build  -f $(BUILD_DIR)/Dockerfile -t $(DOCKER_LOCAL)/$(APP_NAME):$(APP_VERSION) .
 
 docker.push:
 	docker push $(DOCKER_LOCAL)/$(APP_NAME):$(APP_VERSION)

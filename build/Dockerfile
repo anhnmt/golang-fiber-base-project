@@ -3,7 +3,7 @@
 FROM golang:alpine as builder
 
 # Add Maintainer Info
-LABEL maintainer="Tuan Anh Nguyen Manh <anhng.dev@gmail.com>"
+LABEL maintainer="Tuan Anh Nguyen Manh <xdorro@gmail.com>"
 
 # Set the Current Working Directory inside the container
 WORKDIR /app
@@ -28,7 +28,7 @@ WORKDIR /root/
 
 # Copy the Pre-built binary file from the previous stage
 COPY --from=builder /app/main .
-COPY --from=builder /app/config.yml .
+COPY --from=builder /app/.env .
 
 # Expose port 8000 to the outside world
 EXPOSE 8000

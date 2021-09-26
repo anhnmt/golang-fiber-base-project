@@ -1,0 +1,44 @@
+basePath: /
+definitions:
+  response.Response:
+    properties:
+      data:
+        type: object
+      message:
+        type: string
+      status:
+        type: integer
+    type: object
+host: localhost:8000
+info:
+  contact:
+    email: xdorro@gmail.com
+    name: Nguyen Manh Tuan Anh
+  description: This is a base project for Fiber
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Golang Fiber Simple Project
+  version: 1.0.0
+paths:
+  /v1/users:
+    get:
+      consumes:
+      - application/json
+      description: Get all users
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: Get all users
+      tags:
+      - users
+swagger: "2.0"

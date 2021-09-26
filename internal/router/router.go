@@ -20,6 +20,9 @@ func Router(app *fiber.App, conf *config.DefaultConfig, client *ent.Client) {
 	// API Group
 	api := app.Group("/api")
 	{
+		// Swagger
+		SwaggerRouter(app)
+
 		// V1 API
 		V1Router(api, conf, client)
 	}
