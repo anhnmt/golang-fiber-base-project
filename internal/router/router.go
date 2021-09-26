@@ -2,6 +2,7 @@ package router
 
 import (
 	"github.com/gofiber/fiber/v2"
+
 	"github.com/xdorro/golang-fiber-base-project/config"
 	"github.com/xdorro/golang-fiber-base-project/pkg/ent"
 	"github.com/xdorro/golang-fiber-base-project/util"
@@ -17,9 +18,11 @@ func Router(app *fiber.App, conf *config.DefaultConfig, client *ent.Client) {
 	})
 
 	// API Group
-	//api := app.Group("/api")
-	//{
-	//}
+	api := app.Group("/api")
+	{
+		// V1 API
+		V1Router(api, conf, client)
+	}
 
 	// 404 error
 	NotFoundRouter(app)

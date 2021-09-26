@@ -1,9 +1,10 @@
 package util
 
 import (
-	"github.com/bwmarrin/snowflake"
 	"reflect"
 	"testing"
+
+	"github.com/bwmarrin/snowflake"
 )
 
 func TestGenerateSnowflakeID(t *testing.T) {

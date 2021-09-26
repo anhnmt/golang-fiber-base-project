@@ -24,6 +24,9 @@ type DefaultConfig struct {
 	// DATABASE
 	DBDriver string `mapstructure:"DB_DRIVER"`
 	DBUrl    string `mapstructure:"DB_URL"`
+
+	// JWT
+	JWTSecret string `mapstructure:"JWT_SECRET"`
 }
 
 var (
@@ -56,7 +59,7 @@ func Config() *DefaultConfig {
 
 				defaultConfig.Ctx = context.Background()
 
-				log.Println(defaultConfig)
+				//log.Println(defaultConfig)
 			}
 		})
 	}
