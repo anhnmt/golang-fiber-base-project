@@ -51,3 +51,6 @@ go.get:
 
 go.gen:
 	go generate ./...
+
+go.lint:
+	golangci-lint run ./...

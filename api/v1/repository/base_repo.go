@@ -12,11 +12,11 @@ var (
 )
 
 type UserRepository interface {
-	FindAllUsers() ([]*ent.User, error)
+	FindAllUsersByStatusIn(status []int) ([]*ent.User, error)
 	FindUserByEmailAndStatusNotIn(email string, status []int) (*ent.User, error)
 	FindUserByEmailAndStatusNotInAndIgnorePassword(email string, status []int) (*ent.User, error)
-	FindUserByIDAndStatusNotIn(ID int64, status []int) (*ent.User, error)
-	FindUserByIDAndStatusNotInAndIgnorePassword(ID int64, status []int) (*ent.User, error)
+	FindUserByIDAndStatusNotIn(id int64, status []int) (*ent.User, error)
+	FindUserByIDAndStatusNotInAndIgnorePassword(id int64, status []int) (*ent.User, error)
 	CreateUser(*ent.User) (*ent.User, error)
 	UpdateUser(*ent.User) (*ent.User, error)
 	UpdateStatus(*ent.User) (*ent.User, error)

@@ -4,7 +4,9 @@ import (
 	"log"
 	"sync"
 
+	// driver mysql/mariadb
 	_ "github.com/go-sql-driver/mysql"
+	// driver postgres
 	_ "github.com/lib/pq"
 
 	"github.com/xdorro/golang-fiber-base-project/config"

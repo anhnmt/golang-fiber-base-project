@@ -59,7 +59,7 @@ func Config() *DefaultConfig {
 
 				defaultConfig.Ctx = context.Background()
 
-				//log.Println(defaultConfig)
+				// log.Println(defaultConfig)
 			}
 		})
 	}

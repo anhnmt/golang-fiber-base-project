@@ -19,7 +19,7 @@ func V1Router(app fiber.Router, conf *config.DefaultConfig, client *ent.Client) 
 
 		auth := v1.Group("/auth")
 		{
-			authController := controller.NewAuthController(client, conf.Ctx)
+			authController := controller.NewAuthController(conf.Ctx, client)
 			auth.Post("/login", authController.Login)
 
 			auth.Use(middleware.Protected())
@@ -29,12 +29,12 @@ func V1Router(app fiber.Router, conf *config.DefaultConfig, client *ent.Client) 
 
 		user := v1.Group("/users")
 		{
-			userController := controller.NewUserController(client, conf.Ctx)
+			userController := controller.NewUserController(conf.Ctx, client)
 			user.Get("/", userController.FindAllUsers)
 			user.Post("/", userController.CreateNewUsers)
-			user.Get("/:userId", userController.FindUserById)
-			user.Put("/:userId", userController.UpdateUserById)
-			user.Delete("/:userId", userController.DeleteUserById)
+			user.Get("/:userId", userController.FindUserByID)
+			user.Put("/:userId", userController.UpdateUserByID)
+			user.Delete("/:userId", userController.DeleteUserByID)
 		}
 	}
 }

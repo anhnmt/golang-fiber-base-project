@@ -44,5 +44,5 @@ func Middleware(app *fiber.App, conf *config.DefaultConfig) {
 	}
 
 	// Add caching.
-	//cache.New(),
+	// cache.New(),
 }

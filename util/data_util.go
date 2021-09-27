@@ -11,8 +11,10 @@ import (
 func GenerateSnowflakeID(node ...int64) snowflake.ID {
 	var nodeNum int64 = 0
 
-	if node != nil && len(node) > 0 {
-		nodeNum = node[0]
+	if node != nil {
+		if len(node) > 0 {
+			nodeNum = node[0]
+		}
 	}
 
 	// Create a new Node with a Node number of 1
@@ -36,18 +38,17 @@ func GenerateUUID() string {
 func GetFirst(args interface{}, num ...int) interface{} {
 	var check = 0
 
-	if num != nil && len(num) > 0 {
-		check = num[0]
+	if num != nil {
+		if len(num) > 0 {
+			check = num[0]
+		}
 	}
 
 	if args == nil || check > 3 {
 		return nil
 	}
 
-	switch args.(type) {
-	case []interface{}:
-		first := args.([]interface{})
-
+	if first, ok := args.([]interface{}); ok {
 		if len(first) == 0 {
 			return nil
 		}
@@ -57,10 +58,7 @@ func GetFirst(args interface{}, num ...int) interface{} {
 		}
 
 		return first[0]
-	case interface{}:
-		return args
-
-	default:
-		return nil
 	}
+
+	return args
 }

@@ -21,13 +21,13 @@ type AuthControllerImpl struct {
 	UserRepository repository.UserRepository
 }
 
-func NewAuthController(client *ent.Client, ctx context.Context) AuthController {
+func NewAuthController(ctx context.Context, client *ent.Client) AuthController {
 	if authController == nil {
 		once = &sync.Once{}
 
 		once.Do(func() {
 			authController = &AuthControllerImpl{
-				UserRepository: repository.NewUserRepository(client, ctx),
+				UserRepository: repository.NewUserRepository(ctx, client),
 			}
 
 			log.Println("Create new AuthController")

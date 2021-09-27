@@ -20,8 +20,8 @@ type AuthController interface {
 
 type UserController interface {
 	FindAllUsers(c *fiber.Ctx) error
-	FindUserById(c *fiber.Ctx) error
+	FindUserByID(c *fiber.Ctx) error
 	CreateNewUsers(c *fiber.Ctx) error
-	UpdateUserById(c *fiber.Ctx) error
-	DeleteUserById(c *fiber.Ctx) error
+	UpdateUserByID(c *fiber.Ctx) error
+	DeleteUserByID(c *fiber.Ctx) error
 }

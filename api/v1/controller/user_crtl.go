@@ -17,13 +17,13 @@ type UserControllerImpl struct {
 	UserRepository repository.UserRepository
 }
 
-func NewUserController(client *ent.Client, ctx context.Context) UserController {
+func NewUserController(ctx context.Context, client *ent.Client) UserController {
 	if userController == nil {
 		once = &sync.Once{}
 
 		once.Do(func() {
 			userController = &UserControllerImpl{
-				UserRepository: repository.NewUserRepository(client, ctx),
+				UserRepository: repository.NewUserRepository(ctx, client),
 			}
 
 			log.Println("Create new UserController")
@@ -43,7 +43,12 @@ func NewUserController(client *ent.Client, ctx context.Context) UserController {
 // @Failure 400 {object} response.Response{}
 // @Router /v1/users [get]
 func (ctrl *UserControllerImpl) FindAllUsers(*fiber.Ctx) error {
-	users, err := ctrl.UserRepository.FindAllUsers()
+	status := []int{
+		util.StatusActive,
+		util.StatusDraft,
+	}
+
+	users, err := ctrl.UserRepository.FindAllUsersByStatusIn(status)
 
 	if err != nil {
 		return util.ResponseBadRequest(err.Error())
@@ -78,13 +83,13 @@ func (ctrl *UserControllerImpl) CreateNewUsers(c *fiber.Ctx) error {
 	return util.ResponseSuccess("Thành công")
 }
 
-func (ctrl *UserControllerImpl) FindUserById(c *fiber.Ctx) error {
-	userId, _ := c.ParamsInt("userId")
+func (ctrl *UserControllerImpl) FindUserByID(c *fiber.Ctx) error {
+	userID, _ := c.ParamsInt("userId")
 	status := []int{
 		util.StatusDelete,
 	}
 
-	user, err := ctrl.UserRepository.FindUserByIDAndStatusNotInAndIgnorePassword(int64(userId), status)
+	user, err := ctrl.UserRepository.FindUserByIDAndStatusNotInAndIgnorePassword(int64(userID), status)
 
 	if err != nil || user.ID == 0 {
 		return util.ResponseBadRequest("User không tồn tại")
@@ -93,13 +98,13 @@ func (ctrl *UserControllerImpl) FindUserById(c *fiber.Ctx) error {
 	return util.ResponseSuccess("Thành công", user)
 }
 
-func (ctrl *UserControllerImpl) UpdateUserById(c *fiber.Ctx) error {
-	userId, _ := c.ParamsInt("userId")
+func (ctrl *UserControllerImpl) UpdateUserByID(c *fiber.Ctx) error {
+	userID, _ := c.ParamsInt("userId")
 	status := []int{
 		util.StatusDelete,
 	}
 
-	user, err := ctrl.UserRepository.FindUserByIDAndStatusNotInAndIgnorePassword(int64(userId), status)
+	user, err := ctrl.UserRepository.FindUserByIDAndStatusNotInAndIgnorePassword(int64(userID), status)
 
 	if err != nil || user.ID == 0 {
 		return util.ResponseBadRequest("User không tồn tại")
@@ -123,13 +128,13 @@ func (ctrl *UserControllerImpl) UpdateUserById(c *fiber.Ctx) error {
 	return util.ResponseSuccess("Thành công")
 }
 
-func (ctrl *UserControllerImpl) DeleteUserById(c *fiber.Ctx) error {
-	userId, _ := c.ParamsInt("userId")
+func (ctrl *UserControllerImpl) DeleteUserByID(c *fiber.Ctx) error {
+	userID, _ := c.ParamsInt("userId")
 	status := []int{
 		util.StatusDelete,
 	}
 
-	user, err := ctrl.UserRepository.FindUserByIDAndStatusNotInAndIgnorePassword(int64(userId), status)
+	user, err := ctrl.UserRepository.FindUserByIDAndStatusNotInAndIgnorePassword(int64(userID), status)
 
 	if err != nil || user.ID == 0 {
 		return util.ResponseBadRequest("User không tồn tại")

@@ -6,6 +6,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+// GetTokenClaims get token claims
 func GetTokenClaims(c *fiber.Ctx) (jwt.MapClaims, error) {
 	local := c.Locals("user")
 
@@ -19,20 +20,18 @@ func GetTokenClaims(c *fiber.Ctx) (jwt.MapClaims, error) {
 	return claims, nil
 }
 
-func ValidToken(token *jwt.Token, ID int64) bool {
+// ValidToken check valid token
+func ValidToken(token *jwt.Token, id int64) bool {
 	claims := token.Claims.(jwt.MapClaims)
-	userId := claims["user_id"].(int64)
+	userID := claims["id"].(int64)
 
-	if ID != userId {
-		return false
-	}
-
-	return true
+	return id != userID
 }
 
 // HashPassword hash password
 func HashPassword(password string) (string, error) {
-	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 10)
+	const COST = 10
+	bytes, err := bcrypt.GenerateFromPassword([]byte(password), COST)
 	return string(bytes), err
 }
 

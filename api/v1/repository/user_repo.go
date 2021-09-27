@@ -14,7 +14,7 @@ type UserRepositoryImpl struct {
 	ctx    context.Context
 }
 
-func NewUserRepository(client *ent.Client, ctx context.Context) UserRepository {
+func NewUserRepository(ctx context.Context, client *ent.Client) UserRepository {
 	if userRepository == nil {
 		once = &sync.Once{}
 
@@ -31,13 +31,11 @@ func NewUserRepository(client *ent.Client, ctx context.Context) UserRepository {
 	return userRepository
 }
 
-func (repo *UserRepositoryImpl) FindAllUsers() ([]*ent.User, error) {
-	users := make([]*ent.User, 0)
-
+func (repo *UserRepositoryImpl) FindAllUsersByStatusIn(status []int) ([]*ent.User, error) {
 	users, err := repo.client.User.
 		Query().
 		Select(user.FieldID, user.FieldName, user.FieldEmail, user.FieldStatus, user.FieldCreatedAt, user.FieldUpdatedAt).
-		Where(user.StatusIn(1, 2)).
+		Where(user.StatusIn(status...)).
 		All(repo.ctx)
 
 	if err != nil {
@@ -48,8 +46,6 @@ func (repo *UserRepositoryImpl) FindAllUsers() ([]*ent.User, error) {
 }
 
 func (repo *UserRepositoryImpl) FindUserByEmailAndStatusNotIn(email string, status []int) (*ent.User, error) {
-	findUser := new(ent.User)
-
 	findUser, err := repo.client.User.
 		Query().
 		Where(user.StatusNotIn(status...), user.Email(email)).
@@ -63,8 +59,6 @@ func (repo *UserRepositoryImpl) FindUserByEmailAndStatusNotIn(email string, stat
 }
 
 func (repo *UserRepositoryImpl) FindUserByEmailAndStatusNotInAndIgnorePassword(email string, status []int) (*ent.User, error) {
-	findUser := new(ent.User)
-
 	findUser, err := repo.client.User.
 		Query().
 		Select(user.FieldID, user.FieldName, user.FieldEmail, user.FieldStatus, user.FieldCreatedAt, user.FieldUpdatedAt).
@@ -78,12 +72,10 @@ func (repo *UserRepositoryImpl) FindUserByEmailAndStatusNotInAndIgnorePassword(e
 	return findUser, nil
 }
 
-func (repo *UserRepositoryImpl) FindUserByIDAndStatusNotIn(ID int64, status []int) (*ent.User, error) {
-	obj := new(ent.User)
-
+func (repo *UserRepositoryImpl) FindUserByIDAndStatusNotIn(id int64, status []int) (*ent.User, error) {
 	obj, err := repo.client.User.
 		Query().
-		Where(user.StatusNotIn(status...), user.ID(ID)).
+		Where(user.StatusNotIn(status...), user.ID(id)).
 		First(repo.ctx)
 
 	if err != nil {
@@ -93,13 +85,11 @@ func (repo *UserRepositoryImpl) FindUserByIDAndStatusNotIn(ID int64, status []in
 	return obj, nil
 }
 
-func (repo *UserRepositoryImpl) FindUserByIDAndStatusNotInAndIgnorePassword(ID int64, status []int) (*ent.User, error) {
-	obj := new(ent.User)
-
+func (repo *UserRepositoryImpl) FindUserByIDAndStatusNotInAndIgnorePassword(id int64, status []int) (*ent.User, error) {
 	obj, err := repo.client.User.
 		Query().
 		Select(user.FieldID, user.FieldName, user.FieldEmail, user.FieldStatus, user.FieldCreatedAt, user.FieldUpdatedAt).
-		Where(user.StatusNotIn(status...), user.ID(ID)).
+		Where(user.StatusNotIn(status...), user.ID(id)).
 		First(repo.ctx)
 
 	if err != nil {

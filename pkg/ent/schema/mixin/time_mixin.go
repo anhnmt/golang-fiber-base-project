@@ -1,10 +1,11 @@
 package mixin
 
 import (
+	"time"
+
 	"entgo.io/ent"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/mixin"
-	"time"
 )
 
 type TimeMixin struct {
