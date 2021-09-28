@@ -1,10 +1,6 @@
-.editorconfig
+.idea
 .git
-AUTHORS.md
-CONTRIBUTING.md
-LICENSE
 Makefile
-NOTICE
 README.md
 
 !*.go
